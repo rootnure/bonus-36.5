@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handle Non-Primitive</title>
+</head>
+<body>
+    <h1>Handle Non-Primitive (Array, Object) Data for Local Storage</h1>
+
+    <script>
+        const person = { name: 'Md. Nure Alom', age: 25, isMale: true, height: 68, weight: 85 };
+        // convert object to a string
+        const personString = JSON.stringify(person);
+        // localStorage.setItem('person', person); // object will cause problem
+        localStorage.setItem('person', personString); // no problem to store string
+
+        const valueOfPersonKeyInLocalStorage = localStorage.getItem('person');
+        const personObj = JSON.parse(valueOfPersonKeyInLocalStorage);
+        console.log(personObj);
+    </script>
+</body>
+</html>
