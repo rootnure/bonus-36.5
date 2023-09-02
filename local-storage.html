@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Local Storage</title>
+</head>
+<body>
+    <h1>Explore Browser Local Storage</h1>
+
+    <script>
+        // set new key to Browser Local Storage
+        localStorage.setItem('full-name', 'Nur');
+        
+        // update existing value stored in Browser Local Storage
+        localStorage.setItem('full-name', 'MD. Nure Alom');
+        
+        // set some dummy data to Browser Local Storage
+        localStorage.setItem('age', 25); // number value will also stored as string
+        localStorage.setItem('isMale', true); // boolean value will also stored as string
+        localStorage.setItem('friends', ['asif', 'arif', 'sabbir', 'rafi']); // array will stored as comma separated concat string
+        localStorage.setItem('more-info', {height: 68, weight: 85}); // direct object store won't work
+
+        // get stored value from Browser Local Storage
+        const fullName = localStorage.getItem('full-name'); // returns the value stored by that key name. if key not found returns null
+        console.log(fullName);
+
+        // remove a single item (key-value pair) from Browser Local Storage
+        localStorage.removeItem('full-name');
+
+        // check how many pairs stored in Browser Local Storage
+        const length = localStorage.length;
+        console.log(length);
+
+        // remove all items (key-value pairs) from Browser Local Storage
+        localStorage.clear();
+    </script>
+</body>
+</html>
