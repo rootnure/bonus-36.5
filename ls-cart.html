@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart Store In LS</title>
+    <style>
+        table,
+        td,
+        th {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        td,
+        th {
+            padding-left: 20px;
+            padding-right: 20px;
+            text-align: center;
+        }
+
+        thead {
+            background-color: blue;
+            color: whitesmoke;
+        }
+
+        tbody:nth-child(2n+1) {
+            background-color: aliceblue;
+        }
+
+        table {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text" id="product-name" placeholder="Product">
+    <input type="number" id="product-quantity" placeholder="Quantity">
+    <button onclick="addProduct()">Add Product</button>
+    <table>
+        <caption>My Cart</caption>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Product</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody id="cart-container">
+
+        </tbody>
+    </table>
+</body>
+<script>
+    const addProduct = () => {
+        const productField = document.getElementById('product-name');
+        const quantityField = document.getElementById('product-quantity');
+        const product = productField.value;
+        const quantity = quantityField.value;
+        productField.value = '';
+        quantityField.value = '';
+        console.log(product, quantity);
+        saveProductToLocalStorage(product, quantity);
+    }
+
+    const displayProduct = (product, quantity) => {
+        const tbody = document.getElementById('cart-container');
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+                <td>${tbody.childElementCount + 1}</td>
+                <td>${product}</td>
+                <td>${quantity}</td>
+            `;
+        tbody.appendChild(tr);
+    }
+
+    const getStoredShoppingCart = () => {
+        let cart = {};
+        const storedCart = localStorage.getItem('cart');
+        if (storedCart) {
+            cart = JSON.parse(storedCart);
+        }
+        return cart;
+    }
+
+    const saveProductToLocalStorage = (product, quantity) => {
+        const tbody = document.getElementById('cart-container');
+        tbody.textContent = '';
+        const cart = getStoredShoppingCart();
+        const productLowerCase = product.toLowerCase();
+        console.log(product, productLowerCase);
+        cart[productLowerCase] = cart[productLowerCase] ? +cart[productLowerCase] + +quantity : quantity;
+        for (const cartItem in cart) {
+            displayProduct(cartItem, cart[cartItem]);
+        }
+        const cartStringified = JSON.stringify(cart);
+        localStorage.setItem('cart', cartStringified);
+    }
+
+    const displayCartFromLS = () => {
+        const savedCart = localStorage.getItem('cart');
+        const savedCartObj = JSON.parse(savedCart)
+        for (const product in savedCartObj) {
+            displayProduct(product, savedCartObj[product]);
+        }
+    }
+
+    displayCartFromLS();
+</script>
+</body>
+
+</html>
